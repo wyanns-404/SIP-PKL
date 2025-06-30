@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite('resources/css/app.css')
+@extends('layouts.landingPage.app')
 
-    <title>Document</title>
-</head>
-<body>
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-</body>
-</html>
+@section('content')
+
+  @include('layouts.landingPage.s-hero')
+  @include('layouts.landingPage.s-about')
+  @include('layouts.landingPage.s-value')
+  @include('layouts.landingPage.s-stats')
+  @include('layouts.landingPage.s-features')
+  @include('layouts.landingPage.s-altFeatures')
+  @include('layouts.landingPage.s-services')
+  @include('layouts.landingPage.s-pricing')
+  @include('layouts.landingPage.s-faq')
+  @include('layouts.landingPage.s-portofolio')
+  @include('layouts.landingPage.s-testimonials')
+  @include('layouts.landingPage.s-team')
+  @include('layouts.landingPage.s-clients')
+  @include('layouts.landingPage.s-recentPost')
+  @include('layouts.landingPage.s-contact')
+
+@endsection
