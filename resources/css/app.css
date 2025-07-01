@@ -10,3 +10,22 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Loader custom CSS */
+.page-loading {
+  background-image: radial-gradient(
+    circle at top right,
+    rgba(61, 99, 221, 0.1) 0%,
+    rgba(61, 99, 221, 0.1) 28%,
+    rgba(61, 99, 221, 0.075) 28%,
+    rgba(61, 99, 221, 0.075) 45%,
+    rgba(61, 99, 221, 0.05) 45%,
+    rgba(61, 99, 221, 0.05) 63%,
+    rgba(61, 99, 221, 0.025) 63%,
+    rgba(61, 99, 221, 0.025) 100%
+  );
+  transition: opacity 0.5s ease;
+}
+.page-loading.hide {
+  @apply opacity-0 invisible pointer-events-none;
+}

@@ -3,8 +3,8 @@
 
     <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
-        <h2>Portfolio</h2>
-        <p>Check our latest work</p>
+        <h2>Dokumentasi</h2>
+        <p>Beberapa Dokumentasi Kegiatan PKL</p>
     </div><!-- End Section Title -->
 
     <div class="container">
@@ -12,11 +12,11 @@
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
             <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-                <li data-filter="*" class="filter-active">All</li>
-                <li data-filter=".filter-app">App</li>
-                <li data-filter=".filter-product">Product</li>
-                <li data-filter=".filter-branding">Branding</li>
-                <li data-filter=".filter-books">Books</li>
+                <li data-filter="*" class="filter-active">Semua</li>
+                <li data-filter=".filter-app">Praktik</li>
+                <li data-filter=".filter-product">Presentasi</li>
+                <li data-filter=".filter-branding">Penerimaan/Pelepasan</li>
+                <li data-filter=".filter-books">xxxxx</li>
             </ul><!-- End Portfolio Filters -->
 
             <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">

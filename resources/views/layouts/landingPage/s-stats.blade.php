@@ -1,6 +1,10 @@
 <!-- Stats Section -->
 <section id="stats" class="stats section">
-
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+        <h2>PKL</h2>
+        <p>Data PKL Realtime<br></p>
+    </div><!-- End Section Title -->
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row gy-4">
@@ -11,7 +15,8 @@
                     <div>
                         <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
                             class="purecounter"></span>
-                        <p>Happy Clients</p>
+                        <p>
+PKL Selesai</p>
                     </div>
                 </div>
             </div><!-- End Stats Item -->
@@ -22,7 +27,7 @@
                     <div>
                         <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
                             class="purecounter"></span>
-                        <p>Projects</p>
+                        <p>Sedang PKL</p>
                     </div>
                 </div>
             </div><!-- End Stats Item -->
@@ -33,7 +38,7 @@
                     <div>
                         <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1"
                             class="purecounter"></span>
-                        <p>Hours Of Support</p>
+                        <p>Batal</p>
                     </div>
                 </div>
             </div><!-- End Stats Item -->
@@ -44,7 +49,7 @@
                     <div>
                         <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1"
                             class="purecounter"></span>
-                        <p>Hard Workers</p>
+                        <p>Lowongan</p>
                     </div>
                 </div>
             </div><!-- End Stats Item -->

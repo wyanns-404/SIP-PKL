@@ -4,7 +4,7 @@
     <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
         <h2>Testimonials</h2>
-        <p>What they are saying about us<br></p>
+        <p>Apa Kata Mereka PKL di BBPOM Lampung<br></p>
     </div><!-- End Section Title -->
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -75,69 +75,6 @@
                                 alt="">
                             <h3>Sara Wilsson</h3>
                             <h4>Designer</h4>
-                        </div>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <div class="stars">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i>
-                        </div>
-                        <p>
-                            Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem
-                            veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint
-                            minim.
-                        </p>
-                        <div class="profile mt-auto">
-                            <img src="flexstart/assets/img/testimonials/testimonials-3.jpg" class="testimonial-img"
-                                alt="">
-                            <h3>Jena Karlis</h3>
-                            <h4>Store Owner</h4>
-                        </div>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <div class="stars">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i>
-                        </div>
-                        <p>
-                            Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim
-                            fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem
-                            dolore labore illum veniam.
-                        </p>
-                        <div class="profile mt-auto">
-                            <img src="flexstart/assets/img/testimonials/testimonials-4.jpg" class="testimonial-img"
-                                alt="">
-                            <h3>Matt Brandon</h3>
-                            <h4>Freelancer</h4>
-                        </div>
-                    </div>
-                </div><!-- End testimonial item -->
-
-                <div class="swiper-slide">
-                    <div class="testimonial-item">
-                        <div class="stars">
-                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                class="bi bi-star-fill"></i>
-                        </div>
-                        <p>
-                            Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster
-                            veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam
-                            culpa fore nisi cillum quid.
-                        </p>
-                        <div class="profile mt-auto">
-                            <img src="flexstart/assets/img/testimonials/testimonials-5.jpg" class="testimonial-img"
-                                alt="">
-                            <h3>John Larson</h3>
-                            <h4>Entrepreneur</h4>
                         </div>
                     </div>
                 </div><!-- End testimonial item -->

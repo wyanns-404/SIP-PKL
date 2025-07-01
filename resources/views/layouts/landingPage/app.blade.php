@@ -26,6 +26,8 @@
     <link href="flexstart/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="flexstart/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+    @vite('resources/css/app.css')
+
     <!-- Main CSS File -->
     <link href="flexstart/assets/css/main.css" rel="stylesheet">
 
@@ -39,6 +41,23 @@
 </head>
 
 <body class="index-page">
+
+    <!-- Page loading -->
+    <div class="page-loading fixed top-0 bottom-0 left-0 right-0 z-[99999] flex items-center justify-center bg-primary-light-1 dark:bg-primary-dark-1 opacity-100 visible pointer-events-auto"
+        role="status" aria-live="polite" aria-atomic="true" aria-label="Loading...">
+        <div class="grid-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
 
     @include('layouts.landingPage.header')
 
@@ -66,6 +85,18 @@
 
     <!-- Main JS File -->
     <script src="flexstart/assets/js/main.js"></script>
+
+    <script>
+        var pageLoading = document.querySelector(".page-loading");
+        if (pageLoading) {
+            window.addEventListener("load", () => {
+                pageLoading.classList.add("hide");
+                setTimeout(() => {
+                    pageLoading.style.display = "none";
+                }, 1000);
+            });
+        }
+    </script>
 
 </body>
 
