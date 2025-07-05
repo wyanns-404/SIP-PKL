@@ -13,6 +13,6 @@ Route::get('/', function () {
 // admin area
 Route::prefix('admin')->group(function () {
     Route::get('/', function () {
-        return view('backend.test');
+        return view('backend.index');
     }); 
 });
