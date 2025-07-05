@@ -7,5 +7,5 @@ Route::get('/laravel', function () {
 });
 
 Route::get('/', function () {
-    return view('landingPage');
+    return view('index');
 });
