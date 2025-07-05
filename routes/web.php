@@ -9,3 +9,10 @@ Route::get('/laravel', function () {
 Route::get('/', function () {
     return view('landingPage');
 });
+
+// admin area
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('backend.test');
+    }); 
+});
