@@ -7,7 +7,7 @@ Route::get('/laravel', function () {
 });
 
 Route::get('/', function () {
-    return view('index');
+    return view('frontend.landingPage');
 });
 
 // admin area
