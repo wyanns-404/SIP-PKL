@@ -14,7 +14,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     })->name('dashboard');
     Route::prefix('management')->group(function () {
         Route::get('roles', function () {
-            return view('backend.management.roles');
+            return view('backend.management.roles.index');
         })->name('backend.roles');
         Route::get('users', function () {
             return view('backend.management.users.index');
