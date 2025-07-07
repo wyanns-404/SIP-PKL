@@ -4,13 +4,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.landingPage');
 });
 
 // admin prefix 
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/', function () {
-        return view('backend.index');
+        return view('backend.layouts.app');
     })->name('dashboard');
     Route::prefix('management')->group(function () {
         Route::get('roles', function () {
