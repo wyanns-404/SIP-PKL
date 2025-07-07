@@ -34,6 +34,8 @@
     <!-- Nepcha Analytics (nepcha.com) -->
     <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
     <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/46909a6f92.js" crossorigin="anonymous"></script>
     <!-- stack css -->
      @stack('css')
   </head>
