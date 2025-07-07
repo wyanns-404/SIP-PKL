@@ -10,7 +10,7 @@ Route::get('/', function () {
 // admin prefix 
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::get('/', function () {
-        return view('backend.layouts.app');
+        return view('backend.dashboard');
     })->name('dashboard');
     Route::prefix('management')->group(function () {
         Route::get('roles', function () {
