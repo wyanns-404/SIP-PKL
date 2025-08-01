@@ -16,11 +16,27 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Wayan Santie Arif',
-            'npm_nim_nis' => '1234567890',
-            'email' => 'wayan@example.com',
-            'password' => bcrypt('wayan123'),
+            'name' => 'Admin',
+            'npm_nim_nis' => '123',
+            'email' => 'admin@example.com',
             'email_verified_at' => now(), 
+            'password' => bcrypt('123'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'Pembimbing',
+            'npm_nim_nis' => '1234',
+            'email' => 'pembimbing@example.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('1234'),
+        ]);
+
+        User::factory()->create([
+            'name' => 'User',
+            'npm_nim_nis' => '12345',
+            'email' => 'user@example.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('12345'),
         ]);
     }
 }
