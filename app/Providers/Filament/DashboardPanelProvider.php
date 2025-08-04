@@ -72,7 +72,7 @@ class DashboardPanelProvider extends PanelProvider
                     ->setNavigationLabel('Profile')
                     ->setIcon('heroicon-o-user-circle')
                     ->setSort(10)
-                    ->canAccess(fn () => Auth::user()->id === 1)
+                    // ->canAccess(fn () => Auth::user()->id === 1)
                     ->shouldRegisterNavigation(true)
                     ->shouldShowEmailForm(true)
                     ->shouldShowDeleteAccountForm(false)
