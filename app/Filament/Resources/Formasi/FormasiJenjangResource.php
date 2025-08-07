@@ -19,7 +19,7 @@ class FormasiJenjangResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Data PKL';
+    protected static ?string $navigationGroup = 'Admin';
 
     protected static ?string $label = 'Jenjang Pendidikan';
 
