@@ -16,10 +16,25 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Tables\Actions\Action;
 use Filament\Infolists\Components\Tabs;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Support\Enums\MaxWidth;
+
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Wizard\Step;
+use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Pelamar\PelamarPkl;
+
+use Filament\Actions\Action as PageAction;
+use Filament\Tables\Actions\Action as TableAction;
+
+
 
 class LowonganTersedia extends Page implements HasTable, HasForms
 {
@@ -34,6 +49,16 @@ class LowonganTersedia extends Page implements HasTable, HasForms
     protected static ?string $navigationLabel = 'Lowongan';
 
     protected static ?string $navigationGroup = 'Mahasiswa/Siswa';
+
+    // protected function getHeaderActions(): array
+    // {
+    //     return [
+    //         PageAction::make('kembali')
+    //             ->label('Kembali')
+    //             ->icon('heroicon-o-arrow-left')
+    //             ->color('secondary'),
+    //     ];
+    // }
 
     public function table(Tables\Table $table): Tables\Table
     {
@@ -129,8 +154,9 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                     ->color('info'),
             ])
             ->actions([
-                Action::make('detail')
+                TableAction::make('detail')
                     ->label('Detail')
+                    ->button()
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Detail Formasi PKL')
                     ->modalWidth(MaxWidth::FiveExtraLarge)
@@ -174,7 +200,11 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                                                     TextEntry::make('jurusan')
                                                         ->label('Jurusan')
                                                         ->formatStateUsing(fn ($record) => $record->jurusan->pluck('nama_jurusan')->implode(', '))                                                        
-                                                        ->color('primary'),
+                                                        ->color('info'),
+                                                    TextEntry::make('dokumen')
+                                                        ->label('Dokumen')
+                                                        ->default('Pas Foto, Surat Permohonan, dan CV')
+                                                        ->color('info'),
                                             ]),
 
                                         Tab::make('Tanggal Penting')
@@ -226,6 +256,208 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                                             ]),
                                     ]),
                             ]);
+                    }),
+
+                TableAction::make('Apply')
+                    ->label('Apply')
+                    ->button()
+                    ->color('warning')
+                    ->icon('heroicon-o-pencil-square')
+                    ->steps([
+                        Step::make('Data Pribadi')
+                            ->schema([
+                                TextInput::make('nama')
+                                    ->label('Nama')
+                                    ->default(fn () => Auth::user()->name)
+                                    ->columnSpan(6)
+                                    ->disabled(),
+
+                                TextInput::make('npm_nim_nis')
+                                    ->label('NPM / NIM / NIS')
+                                    ->default(fn () => Auth::user()->npm_nim_nis)
+                                    ->dehydrated(true)
+                                    ->columnSpan(6)
+                                    ->disabled(),
+
+                                TextInput::make('email')
+                                    ->label('Email')
+                                    ->default(fn () => Auth::user()->email)
+                                    ->columnSpan(6)
+                                    ->disabled(),
+
+                                TextInput::make('nomor_handphone')
+                                    ->label('Nomor HP')
+                                    ->prefix('+62')
+                                    ->tel()
+                                    ->required()
+                                    ->rule('regex:/^[0-9]{10,15}$/') // hanya angka, 10-15 digit
+                                    ->helperText('Masukkan nomor tanpa spasi atau tanda hubung.')
+                                    ->columnSpan(6),
+
+                                DatePicker::make('tanggal_lahir')
+                                    ->label('Tanggal Lahir')
+                                    ->native(false)
+                                    ->closeOnDateSelection()
+                                    ->displayFormat('d/m/Y')
+                                    ->columnSpan(6)
+                                    ->placeholder('DD/MM/YYYY')
+                                    ->required(),
+
+                                Select::make('kategori_pelamar')
+                                    ->label('Jenjang Pendidikan')
+                                    ->options([
+                                        'siswa' => 'Siswa',
+                                        'mahasiswa' => 'Mahasiswa',
+                                    ])
+                                    ->columnSpan(6)
+                                    ->required(),
+                                
+                                Radio::make('jenis_kelamin')
+                                    ->label('Jenis Kelamin')
+                                    ->options([
+                                        'L' => 'Laki-laki',
+                                        'P' => 'Perempuan',
+                                    ])
+                                    ->columnSpan(6)
+                                    ->required(),
+                                    
+                                Textarea::make('alamat_lengkap')
+                                    ->label('Alamat Lengkap')
+                                    ->rows(3)
+                                    ->columnSpan(6)
+                                    ->required(),
+
+                            ])
+                            ->columns(12),
+
+                        Step::make('Data Pendidikan')
+                            ->schema([
+                                TextInput::make('nama_sekolah')
+                                    ->label('Nama Sekolah')
+                                    ->columnSpan(6)
+                                    ->required(fn ($get) => $get('kategori_pelamar') === 'siswa')
+                                    ->visible(fn ($get) => $get('kategori_pelamar') === 'siswa'),
+                                TextInput::make('nama_universitas')
+                                    ->label('Nama Universitas')
+                                    ->columnSpan(6)
+                                    ->required(fn ($get) => $get('kategori_pelamar') === 'mahasiswa')
+                                    ->visible(fn ($get) => $get('kategori_pelamar') === 'mahasiswa'),
+                                TextInput::make('fakultas')
+                                    ->label('Fakultas')
+                                    ->columnSpan(6)
+                                    ->required(fn ($get) => $get('kategori_pelamar') === 'mahasiswa')
+                                    ->visible(fn ($get) => $get('kategori_pelamar') === 'mahasiswa'),
+                                TextInput::make('jurusan')
+                                    ->label('Jurusan')
+                                    ->columnSpan(6)
+                                    ->required(),
+                                TextInput::make('semester')
+                                    ->label('Semester')
+                                    ->numeric()
+                                    ->columnSpan(6)
+                                    ->required(fn ($get) => $get('kategori_pelamar') === 'mahasiswa')
+                                    ->visible(fn ($get) => $get('kategori_pelamar') === 'mahasiswa'),
+                            ])
+                            ->columns(12),
+
+                        Step::make('Dokumen')
+                            ->schema([
+
+                                FileUpload::make('pas_foto')
+                                    ->label('Pas Foto')
+                                    ->directory(fn ($get) => 'pelamar/' . $get('npm_nim_nis') . '/foto')
+                                    ->image()
+                                    ->maxSize(2048) // 2MB
+                                    ->imagePreviewHeight('150')
+                                    ->preserveFilenames(false)
+                                    ->getUploadedFileNameForStorageUsing(fn ($file) => 
+                                        'pas_foto_' . now()->timestamp . '.' . $file->getClientOriginalExtension()
+                                    )
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png'])
+                                    ->required()
+                                    ->columnSpan(6),
+
+                                FileUpload::make('surat_permohonan')
+                                    ->label('Surat Permohonan')
+                                    ->directory(fn ($get) => 'pelamar/' . $get('npm_nim_nis') . '/surat_permohonan')
+                                    ->maxSize(3072) // 3MB
+                                    ->preserveFilenames(false)
+                                    ->getUploadedFileNameForStorageUsing(fn ($file) => 
+                                        'surat_permohonan_' . now()->timestamp . '.' . $file->getClientOriginalExtension()
+                                    )
+                                    ->acceptedFileTypes(['application/pdf'])
+                                    ->required()
+                                    ->columnSpan(6),
+
+                                FileUpload::make('cv')
+                                    ->label('Curriculum Vitae (CV)')
+                                    ->directory(fn ($get) => 'pelamar/' . $get('npm_nim_nis') . '/cv')
+                                    ->maxSize(3072) // 3MB
+                                    ->preserveFilenames(false)
+                                    ->getUploadedFileNameForStorageUsing(fn ($file) => 
+                                        'cv_' . now()->timestamp . '.' . $file->getClientOriginalExtension()
+                                    )
+                                    ->acceptedFileTypes(['application/pdf'])
+                                    ->required()
+                                    ->columnSpan(6),
+
+                                FileUpload::make('portofolio')
+                                    ->label('Portofolio')
+                                    ->directory(fn ($get) => 'pelamar/' . $get('npm_nim_nis') . '/portofolio')
+                                    ->maxSize(5120) // 5MB
+                                    ->preserveFilenames(false)
+                                    ->getUploadedFileNameForStorageUsing(fn ($file) => 
+                                        'portofolio_' . now()->timestamp . '.' . $file->getClientOriginalExtension()
+                                    )
+                                    ->acceptedFileTypes([
+                                        'application/pdf',
+                                        'image/jpeg', 'image/png'
+                                    ])
+                                    ->nullable()
+                                    ->columnSpan(6),
+
+                                Textarea::make('motivasi')
+                                    ->label('Motivasi')
+                                    ->rows(3)
+                                    ->columnSpan('full')
+                                    ->required(),
+                            ])
+                            ->columns(12),
+                    ])
+                    ->action(function (array $data, $record) {
+                        $pelamar = PelamarPkl::create([
+                            'formasi_id'       => $record->id,
+                            'user_id'          => Auth::id(),
+                            'kategori_pelamar' => $data['kategori_pelamar'],
+                            'tanggal_lahir'    => $data['tanggal_lahir'],
+                            'jenis_kelamin'    => $data['jenis_kelamin'],
+                            'nomor_handphone'  => $data['nomor_handphone'],
+                            'alamat_lengkap'   => $data['alamat_lengkap'],
+                            'motivasi'         => $data['motivasi'],
+                            'pas_foto'         => $data['pas_foto'],
+                            'surat_permohonan' => $data['surat_permohonan'],
+                            'portofolio'       => $data['portofolio'] ?? null,
+                            'cv'               => $data['cv'],
+                        ]);
+
+                        if ($data['kategori_pelamar'] === 'siswa') {
+                            $pelamar->siswa()->create([
+                                'nama_sekolah' => $data['nama_sekolah'],
+                                'jurusan'      => $data['jurusan'],
+                            ]);
+                        } else {
+                            $pelamar->mahasiswa()->create([
+                                'nama_universitas' => $data['nama_universitas'],
+                                'fakultas'         => $data['fakultas'],
+                                'jurusan'          => $data['jurusan'],
+                                'semester'         => $data['semester'],
+                            ]);
+                        }
+
+                        Notification::make()
+                            ->title('Lamaran berhasil dikirim!')
+                            ->success()
+                            ->send();
                     }),
 
             ])
