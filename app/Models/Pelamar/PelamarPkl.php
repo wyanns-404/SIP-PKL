@@ -2,8 +2,11 @@
 
 namespace App\Models\Pelamar;
 
+use App\Models\User;
+use App\Models\Formasi\FormasiPkl;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PelamarPkl extends Model
 {
@@ -33,5 +36,15 @@ class PelamarPkl extends Model
     public function mahasiswa(): HasOne
     {
         return $this->hasOne(PelamarMahasiswa::class, 'pelamar_id');
+    }
+
+    public function formasi(): BelongsTo
+    {
+        return $this->belongsTo(FormasiPkl::class, 'formasi_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
