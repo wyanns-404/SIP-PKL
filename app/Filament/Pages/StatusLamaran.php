@@ -23,7 +23,7 @@ use Filament\Infolists\Components\ImageEntry;
 
 class StatusLamaran extends Page implements HasTable
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     protected static string $view = 'filament.pages.status-lamaran';
 
