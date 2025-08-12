@@ -4,6 +4,7 @@ namespace App\Models\Pelamar;
 
 use App\Models\User;
 use App\Models\Formasi\FormasiPkl;
+use App\Models\NilaiDanSertifikat;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,4 +48,10 @@ class PelamarPkl extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function nilaiDanSertifikat()
+    {
+        return $this->hasOne(NilaiDanSertifikat::class, 'pelamar_pkl_id');
+    }
+
 }

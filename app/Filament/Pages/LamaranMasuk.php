@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Pages\Page;
 use Filament\Infolists\Infolist;
 use App\Models\Pelamar\PelamarPkl;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\Action;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\FontWeight;
@@ -243,7 +244,7 @@ class LamaranMasuk extends Page implements HasTable
                     Action::make('status')
                         ->label('Edit Status')
                         ->icon('heroicon-o-arrow-down-tray')
-                        ->color('primary')
+                        ->color('success')
                         ->form([
                             \Filament\Forms\Components\Select::make('status')
                                 ->label('Status')
@@ -283,6 +284,53 @@ class LamaranMasuk extends Page implements HasTable
                                 ->send();
                         })
                         ->modalHeading('Ubah Status Lamaran')
+                        ->modalWidth(MaxWidth::ThreeExtraLarge),
+                    
+                    Action::make('Beri Penilaian')
+                        ->label('Beri Penilaian')
+                        ->icon('heroicon-o-star')
+                        ->color('warning')
+                        ->visible(fn ($record) => $record->status === 'diterima')
+                        ->form([
+                            FileUpload::make('nilai')
+                                ->default(fn($record) => optional($record->nilaiDanSertifikat)->nilai)
+                                ->label('File Nilai (PDF)')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->maxSize(2048)
+                                ->directory(fn($get, $record) => 'pelamar/' . ($record->user->npm_nim_nis ?? 'unknown') . '/nilai_dan_sertifikat')
+                                ->getUploadedFileNameForStorageUsing(function ($file, $get, $record) {
+                                    $date = now()->format('Ymd');
+                                    $npm = $record?->user?->npm_nim_nis ?? 'unknown';
+                                    return 'nilai_' . $npm . '_' . $date . '.' . $file->getClientOriginalExtension();
+                                })
+                                ->required(),
+                            FileUpload::make('sertifikat')
+                                ->default(fn($record) => optional($record->nilaiDanSertifikat)->sertifikat)
+                                ->label('File Sertifikat (PDF)')
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->maxSize(2048)
+                                ->directory(fn($get, $record) => 'pelamar/' . ($record->user->npm_nim_nis ?? 'unknown') . '/nilai_dan_sertifikat')
+                                ->getUploadedFileNameForStorageUsing(function ($file, $get, $record) {
+                                    $date = now()->format('Ymd');
+                                    $npm = $record?->user?->npm_nim_nis ?? 'unknown';
+                                    return 'sertifikat_' . $npm . '_' . $date . '.' . $file->getClientOriginalExtension();
+                                })
+                                ->required(),
+                        ])
+                        ->action(function ($data, $record) {
+                            $record->nilaiDanSertifikat()->updateOrCreate(
+                                [ 'pelamar_pkl_id' => $record->id ],
+                                [
+                                    'nilai' => $data['nilai'],
+                                    'sertifikat' => $data['sertifikat'],
+                                ]
+                            );
+                            \Filament\Notifications\Notification::make()
+                                ->title('Nilai dan Sertifikat berhasil diunggah')
+                                ->success()
+                                ->send();
+                        })
+                        ->modalHeading('Upload Nilai & Sertifikat')
                         ->modalWidth(MaxWidth::ThreeExtraLarge),
 
                 ])->icon('heroicon-o-bars-3'),

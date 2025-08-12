@@ -244,6 +244,30 @@ class StatusLamaran extends Page implements HasTable
                                     ->view('filament.components.pdf-preview')
                                     ->visible(fn($record) => $record->surat_balasan !== null),
                             ]);
+                    }),
+
+                Action::make('lihat_nilai_dan_sertifikat')
+                    ->label('Nilai & Sertifikat')
+                    ->icon('heroicon-o-document-text')
+                    ->color('success')
+                    ->button()
+                    ->visible(fn ($record) => $record->status === 'diterima' && optional($record->nilaiDanSertifikat)->nilai && optional($record->nilaiDanSertifikat)->sertifikat)
+                    ->modalHeading('Nilai & Sertifikat')
+                    ->modalSubmitAction(false)
+                    ->modalWidth(MaxWidth::Large)
+                    ->modalContent(function ($record) {
+                        return Infolist::make()
+                            ->record($record)
+                            ->schema([
+                                ViewEntry::make('nilaiDanSertifikat.nilai')
+                                    ->label('File Nilai')
+                                    ->view('filament.components.pdf-preview')
+                                    ->visible(fn($record) => optional($record->nilaiDanSertifikat)->nilai !== null),
+                                ViewEntry::make('nilaiDanSertifikat.sertifikat')
+                                    ->label('File Sertifikat')
+                                    ->view('filament.components.pdf-preview')
+                                    ->visible(fn($record) => optional($record->nilaiDanSertifikat)->sertifikat !== null),
+                            ]);
                     })
             ])
 
