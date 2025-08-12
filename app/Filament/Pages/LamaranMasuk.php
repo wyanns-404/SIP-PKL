@@ -146,7 +146,7 @@ class LamaranMasuk extends Page implements HasTable
                                                                 ->label('Email')
                                                                 ->color('info')
                                                                 ->columnSpan(6),
-                                                                
+
                                                             TextEntry::make('nomor_handphone')
                                                                 ->label('Nomor Handphone')
                                                                 ->color('info')
@@ -244,32 +244,46 @@ class LamaranMasuk extends Page implements HasTable
                         ->label('Edit Status')
                         ->icon('heroicon-o-arrow-down-tray')
                         ->color('primary')
-                        ->modalHeading('Unduh Berkas Lamaran')
-                        ->modalWidth(MaxWidth::FiveExtraLarge)
-                        ->modalSubmitAction(false)
-                        ->modalContent(function ($record) {
-                            return Infolist::make()
-                                ->schema([
-                                    TextEntry::make('formasi.nama_formasi')
-                                        ->label('Formasi'),
-                                    TextEntry::make('user.name')
-                                        ->label('Nama'),
-                                    TextEntry::make('user.npm_nim_nis')
-                                        ->label('NPM/NIM/NIS'),
-                                    TextEntry::make('created_at')
-                                        ->date('d M Y')
-                                        ->label('Tanggal Masuk'),
-                                    TextEntry::make('file')
-                                        ->label('Berkas Lamaran')
-                                        ->getStateUsing(function ($record) {
-                                            return $record->file ? url($record->file) : 'Tidak ada berkas';
-                                        })
-                                        ->formatStateUsing(function ($state) {
-                                            return $state ? '<a href="' . $state . '" target="_blank" class="text-blue-600 hover:underline">Unduh Berkas</a>' : 'Tidak ada berkas';
-                                        })
-                                        ->html(),
-                                ])->record($record);
-                        }),
+                        ->form([
+                            \Filament\Forms\Components\Select::make('status')
+                                ->label('Status')
+                                ->options([
+                                    'diproses' => 'Diproses',
+                                    'diterima' => 'Diterima',
+                                    'ditolak' => 'Ditolak',
+                                ])
+                                ->required()
+                                ->reactive()
+                                ->default(fn ($record) => $record->status),
+                            \Filament\Forms\Components\FileUpload::make('surat_balasan')
+                                ->label('Surat Balasan')
+                                ->default(fn ($record) => $record->surat_balasan)
+                                ->visible(fn ($get) => $get('status') === 'diterima')
+                                ->directory(function ($get, $record) {
+                                    $npm = $record->user->npm_nim_nis ?? 'unknown';
+                                    return 'surat-balasan/' . $npm;
+                                })
+                                ->acceptedFileTypes(['application/pdf'])
+                                ->maxSize(2048)
+                                ->required(fn ($get) => $get('status') === 'diterima')
+                                ->getUploadedFileNameForStorageUsing(function ($file) {
+                                    $date = now()->format('Ymd');
+                                    return 'surat-balasan-' . $date . '.' . $file->getClientOriginalExtension();
+                                }),
+                        ])
+                        ->action(function ($data, $record) {
+                            $record->status = $data['status'];
+                            if ($data['status'] === 'diterima' && isset($data['surat_balasan'])) {
+                                $record->surat_balasan = $data['surat_balasan'];
+                            }
+                            $record->save();
+                            \Filament\Notifications\Notification::make()
+                                ->title('Status berhasil diperbarui')
+                                ->success()
+                                ->send();
+                        })
+                        ->modalHeading('Ubah Status Lamaran')
+                        ->modalWidth(MaxWidth::ThreeExtraLarge),
 
                 ])->icon('heroicon-o-bars-3'),
                 
