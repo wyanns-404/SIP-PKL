@@ -134,16 +134,43 @@ class LamaranMasuk extends Page implements HasTable
                                                         ->schema([ 
                                                             TextEntry::make('user.name')
                                                                 ->label('Nama')
+                                                                ->color('info')
                                                                 ->columnSpan(6),
+
                                                             TextEntry::make('user.npm_nim_nis')
                                                                 ->label('NPM/NIM/NIS')
+                                                                ->color('info')
                                                                 ->columnSpan(6),
+
                                                             TextEntry::make('user.email')
-                                                                ->label('email')
+                                                                ->label('Email')
+                                                                ->color('info')
                                                                 ->columnSpan(6),
+                                                                
                                                             TextEntry::make('nomor_handphone')
                                                                 ->label('Nomor Handphone')
+                                                                ->color('info')
                                                                 ->columnSpan(6),
+                                                            
+                                                            TextEntry::make('alamat_lengkap')
+                                                                ->label('Alamat Lengkap')
+                                                                ->color('info')
+                                                                ->columnSpan(6)
+                                                                ->visible(fn ($record) => $record->alamat_lengkap !== null),
+
+                                                            TextEntry::make('jenis_kelamin')
+                                                                ->label('Jenis Kelamin')
+                                                                ->color('info')
+                                                                ->columnSpan(6)
+                                                                ->visible(fn ($record) => $record->jenis_kelamin !== null)
+                                                                ->formatStateUsing(function ($state) {
+                                                                    return match ($state) {
+                                                                        'L' => 'Laki-laki',
+                                                                        'P' => 'Perempuan',
+                                                                        default => $state,
+                                                                    };
+                                                                }),
+
                                                             TextEntry::make('siswa.nama_sekolah')
                                                                 ->label('Nama Sekolah')
                                                                 ->color('info')
