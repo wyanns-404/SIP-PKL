@@ -31,7 +31,7 @@ class LamaranMasuk extends Page implements HasTable
 
     protected static ?string $title = '';
 
-    protected static ?string $navigationLabel = 'Lamaran Masuk';
+    protected static ?string $navigationLabel = 'Pelamar PKL';
 
     protected static ?string $navigationGroup = 'Admin';
 
@@ -41,7 +41,7 @@ class LamaranMasuk extends Page implements HasTable
             ->query(
                 PelamarPkl::with('user', 'formasi', 'siswa', 'mahasiswa')
             )
-            ->heading('Daftar Lamaran Masuk')
+            ->heading('Daftar Pelamar PKL')
             ->columns([
                 TextColumn::make('formasi.nama_formasi')
                     ->label('Formasi')

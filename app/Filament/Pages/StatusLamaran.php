@@ -226,30 +226,25 @@ class StatusLamaran extends Page implements HasTable
                     }),
 
 
-            //     Action::make('lihat_berkas')
-            //         ->label('Lihat Berkas')
-            //         ->icon('heroicon-o-document-text')
-            //         ->color('success')
-            //         ->visible(fn ($record) => $record->status === 'diterima')
-            //         ->modalHeading('Berkas Pelamar')
-            //         ->modalWidth(MaxWidth::Large)
-            //         ->modalContent(function ($record) {
-            //             // kirim URL yang bisa dibuka langsung (Storage::url)
-            //             return view('filament.pages.modals.berkas', [
-            //                 'record' => $record,
-            //                 'pas_foto' => $record->pas_foto ? Storage::url($record->pas_foto) : null,
-            //                 'surat_permohonan' => $record->surat_permohonan ? Storage::url($record->surat_permohonan) : null,
-            //                 'portofolio' => $record->portofolio ? Storage::url($record->portofolio) : null,
-            //                 'cv' => $record->cv ? Storage::url($record->cv) : null,
-            //             ]);
-            //         }),
-
-            //     Action::make('unduh_semua')
-            //         ->label('Unduh Semua')
-            //         ->icon('heroicon-o-arrow-down-tray')
-            //         ->color('primary')
-            //         ->visible(fn ($record) => $record->status === 'diterima')
-            //         ->openUrlInNewTab(),
+                Action::make('lihat_berkas')
+                    ->label('Lihat Surat Balasan')
+                    ->icon('heroicon-o-document-text')
+                    ->color('success')
+                    ->button()
+                    ->visible(fn ($record) => $record->status === 'diterima' && $record->surat_balasan)
+                    ->modalHeading('Surat Balasan')
+                    ->modalSubmitAction(false)
+                    ->modalWidth(MaxWidth::Large)
+                    ->modalContent(function ($record) {
+                        return Infolist::make()
+                            ->record($record)
+                            ->schema([
+                                ViewEntry::make('surat_balasan')
+                                    ->label('Surat Balasan')
+                                    ->view('filament.components.pdf-preview')
+                                    ->visible(fn($record) => $record->surat_balasan !== null),
+                            ]);
+                    })
             ])
 
 
