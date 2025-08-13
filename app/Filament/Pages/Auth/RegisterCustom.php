@@ -6,9 +6,22 @@ use Filament\Pages\Page;
 use Filament\Pages\Auth\Register as BaseRegister;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class RegisterCustom extends BaseRegister
 {
+    protected function handleRegistration(array $data): \Illuminate\Database\Eloquent\Model
+    {
+        DB::beginTransaction();
+        $user = parent::handleRegistration($data);
+        // Assign role 'user' jika ada role tersebut
+        if ($user && method_exists($user, 'assignRole')) {
+            $user->assignRole('user');
+        }
+        DB::commit();
+        return $user;
+    }
     protected function getForms(): array
     {
         return [

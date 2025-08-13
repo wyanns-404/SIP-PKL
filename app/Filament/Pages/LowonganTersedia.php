@@ -6,39 +6,40 @@ use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Pages\Page;
+use Filament\Infolists\Infolist;
 use App\Models\Formasi\FormasiPkl;
+use App\Models\Pelamar\PelamarPkl;
+use Filament\Forms\Components\Radio;
+use Filament\Support\Enums\MaxWidth;
+use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\Textarea;
+use Filament\Infolists\Components\Tabs;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Infolists\Infolist;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\Tabs;
-use Filament\Infolists\Components\Tabs\Tab;
-use Filament\Support\Enums\MaxWidth;
-
 use Filament\Forms\Components\TextInput;
+
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Wizard\Step;
-use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Pelamar\PelamarPkl;
-
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions\Action as PageAction;
+use Filament\Forms\Components\Wizard\Step;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Tabs\Tab;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Forms\Concerns\InteractsWithForms;
+
+use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Actions\Action as TableAction;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 
 
 class LowonganTersedia extends Page implements HasTable, HasForms
 {
-    use InteractsWithTable, InteractsWithForms;
+    use InteractsWithTable, InteractsWithForms, HasPageShield;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 

@@ -75,6 +75,14 @@ class UserResource extends Resource
                     ->revealable(filament()->arePasswordsRevealable())
                     ->required(fn ($record) => $record === null)
                     ->dehydrated(false),
+                    // Tambah manajemen role
+                    Forms\Components\MultiSelect::make('roles')
+                        ->label('Role')
+                        ->helperText('Pilih satu atau lebih role untuk user ini.')
+                        ->options(\Spatie\Permission\Models\Role::all()->pluck('name', 'id'))
+                        ->relationship('roles', 'name')
+                        ->preload()
+                        ->columnSpanFull(),
             ]);
     }
 
@@ -106,6 +114,12 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('avatar_url')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                    // Kolom role
+                    Tables\Columns\TextColumn::make('roles.name')
+                        ->label('Role')
+                        ->badge()
+                        ->separator(', ')
+                        ->sortable(),
             ])
             ->filters([
                 //

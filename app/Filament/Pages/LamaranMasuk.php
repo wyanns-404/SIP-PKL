@@ -7,7 +7,6 @@ use Filament\Tables;
 use Filament\Pages\Page;
 use Filament\Infolists\Infolist;
 use App\Models\Pelamar\PelamarPkl;
-use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\Action;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Support\Enums\FontWeight;
@@ -17,14 +16,16 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Infolists\Components\Group;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Forms\Components\FileUpload;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Components\ImageEntry;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class LamaranMasuk extends Page implements HasTable
 {
-    use Tables\Concerns\InteractsWithTable;
+    use Tables\Concerns\InteractsWithTable, HasPageShield;
 
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
 
