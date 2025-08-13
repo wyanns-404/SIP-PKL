@@ -20,6 +20,7 @@ use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Components\ImageEntry;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class StatusLamaran extends Page implements HasTable
 {
@@ -33,7 +34,7 @@ class StatusLamaran extends Page implements HasTable
 
     protected static ?string $navigationGroup = 'Mahasiswa/Siswa';
 
-    use Tables\Concerns\InteractsWithTable;
+    use Tables\Concerns\InteractsWithTable, HasPageShield;
 
     public function table(Tables\Table $table): Tables\Table
     {
