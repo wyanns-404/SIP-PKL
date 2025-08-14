@@ -9,8 +9,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
-class User extends Authenticatable implements MustVerifyEmail, HasAvatar
+class User extends Authenticatable implements MustVerifyEmail, HasAvatar, FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
@@ -56,5 +58,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar
     {
         $avatarColumn = config('filament-edit-profile.avatar_column', 'avatar_url');
         return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
     }
 }
