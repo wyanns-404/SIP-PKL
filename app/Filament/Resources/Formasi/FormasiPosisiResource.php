@@ -19,8 +19,6 @@ class FormasiPosisiResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Admin';
-
     protected static ?string $label = 'Posisi Penempatan';
 
     protected static ?string $slug = 'formasi/posisi-penempatan';
@@ -38,6 +36,7 @@ class FormasiPosisiResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nama_posisi')
+                    ->label('Nama Posisi')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -48,6 +47,7 @@ class FormasiPosisiResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama_posisi')
+                    ->label('Nama Posisi')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -83,8 +83,6 @@ class FormasiPosisiResource extends Resource
     {
         return [
             'index' => Pages\ListFormasiPosisis::route('/'),
-            // 'create' => Pages\CreateFormasiPosisi::route('/create'),
-            // 'edit' => Pages\EditFormasiPosisi::route('/{record}/edit'),
         ];
     }
 }

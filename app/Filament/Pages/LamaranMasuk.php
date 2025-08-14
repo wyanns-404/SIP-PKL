@@ -35,8 +35,6 @@ class LamaranMasuk extends Page implements HasTable
 
     protected static ?string $navigationLabel = 'Pelamar PKL';
 
-    protected static ?string $navigationGroup = 'Admin';
-
     public function table(Tables\Table $table): Tables\Table
     {
         return $table
@@ -87,10 +85,10 @@ class LamaranMasuk extends Page implements HasTable
                     ->alignCenter()
                     ->badge()
                     ->color(fn ($record) => match ($record->status) {
-                        'dikirim' => 'gray',
-                        'diproses' => 'info',
-                        'diterima' => 'success',
-                        'ditolak' => 'danger',
+                        'Menunggu Verifikasi' => 'gray',
+                        'Sedang Diproses' => 'info',
+                        'Lamaran Diterima' => 'success',
+                        'Lamaran Ditolak' => 'danger',
                     })
                     ->formatStateUsing(fn (string $state): string => ucfirst($state)),
                 
@@ -123,6 +121,15 @@ class LamaranMasuk extends Page implements HasTable
                                                                 ->height(250)
                                                                 ->columnSpan(4),
                                                             Group::make([
+                                                                TextEntry::make('status')
+                                                                ->label('')
+                                                                ->badge()
+                                                                ->colors([
+                                                                    'gray' => 'Menunggu Verifikasi',
+                                                                    'info' => 'Sedang Diproses',
+                                                                    'success' => 'Lamaran Diterima',
+                                                                    'danger' => 'Lamaran Ditolak',
+                                                                ]),
                                                                 TextEntry::make('user.name')
                                                                     ->label('')
                                                                     ->size(TextEntry\TextEntrySize::Large)
@@ -209,6 +216,25 @@ class LamaranMasuk extends Page implements HasTable
                                                                 ->columnSpan(6)
                                                                 ->visible(fn ($record) => $record->kategori_pelamar === 'mahasiswa'),
                                                         ])->columns(12),
+                                                    Section::make('')
+                                                        ->schema([
+                                                            TextEntry::make('formasi.nama_formasi')
+                                                                ->label('Nama Formasi')
+                                                                ->columnSpan(6)
+                                                                ->color('info'),
+                                                            TextEntry::make('formasi.deskripsi')
+                                                                ->label('Deskripsi')
+                                                                ->columnSpan(6)
+                                                                ->color('info'),
+                                                            TextEntry::make('formasi.posisi.nama_posisi')
+                                                                ->label('Posisi')
+                                                                ->columnSpan(6)
+                                                                ->color('info'),
+                                                            TextEntry::make('formasi.lokasi.nama_lokasi')
+                                                                ->label('Lokasi Penempatan')
+                                                                ->columnSpan(6)
+                                                                ->color('info'),
+                                                        ])->columns(12),
                                                 ])->columns(12),
                                             Tabs\Tab::make('Berkas Lamaran')
                                                 ->icon('heroicon-o-document-text')
@@ -250,9 +276,9 @@ class LamaranMasuk extends Page implements HasTable
                             \Filament\Forms\Components\Select::make('status')
                                 ->label('Status')
                                 ->options([
-                                    'diproses' => 'Diproses',
-                                    'diterima' => 'Diterima',
-                                    'ditolak' => 'Ditolak',
+                                    'Sedang Diproses' => 'Sedang Diproses',
+                                    'Lamaran Diterima' => 'Lamaran Diterima',
+                                    'Lamaran Ditolak' => 'Lamaran Ditolak',
                                 ])
                                 ->required()
                                 ->reactive()
@@ -260,14 +286,14 @@ class LamaranMasuk extends Page implements HasTable
                             \Filament\Forms\Components\FileUpload::make('surat_balasan')
                                 ->label('Surat Balasan')
                                 ->default(fn ($record) => $record->surat_balasan)
-                                ->visible(fn ($get) => $get('status') === 'diterima')
+                                ->visible(fn ($get) => $get('status') === 'Lamaran Diterima')
                                 ->directory(function ($get, $record) {
                                     $npm = $record->user->npm_nim_nis ?? 'unknown';
-                                    return 'surat-balasan/' . $npm;
+                                    return 'pelamar/'. $npm . '/surat-balasan';
                                 })
                                 ->acceptedFileTypes(['application/pdf'])
                                 ->maxSize(2048)
-                                ->required(fn ($get) => $get('status') === 'diterima')
+                                ->required(fn ($get) => $get('status') === 'Lamaran Diterima')
                                 ->getUploadedFileNameForStorageUsing(function ($file) {
                                     $date = now()->format('Ymd');
                                     return 'surat-balasan-' . $date . '.' . $file->getClientOriginalExtension();
@@ -275,7 +301,7 @@ class LamaranMasuk extends Page implements HasTable
                         ])
                         ->action(function ($data, $record) {
                             $record->status = $data['status'];
-                            if ($data['status'] === 'diterima' && isset($data['surat_balasan'])) {
+                            if ($data['status'] === 'Lamaran Diterima' && isset($data['surat_balasan'])) {
                                 $record->surat_balasan = $data['surat_balasan'];
                             }
                             $record->save();
@@ -291,7 +317,7 @@ class LamaranMasuk extends Page implements HasTable
                         ->label('Beri Penilaian')
                         ->icon('heroicon-o-star')
                         ->color('warning')
-                        ->visible(fn ($record) => $record->status === 'diterima')
+                        ->visible(fn ($record) => $record->status === 'Lamaran Diterima')
                         ->form([
                             FileUpload::make('nilai')
                                 ->default(fn($record) => optional($record->nilaiDanSertifikat)->nilai)

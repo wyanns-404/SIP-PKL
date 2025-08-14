@@ -20,8 +20,6 @@ class FormasiPklResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
-    protected static ?string $navigationGroup = 'Admin';
-
     protected static ?string $label = 'Formasi PKL';
 
     protected static ?string $slug = 'formasi-pkl';
@@ -35,7 +33,6 @@ class FormasiPklResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Split::make([
-                    // Kiri: Informasi Formasi & Persyaratan
                     Forms\Components\Group::make([
                         Forms\Components\Section::make('Informasi Formasi')
                             ->schema([
@@ -69,7 +66,6 @@ class FormasiPklResource extends Resource
                                     ->label('Jenjang Pendidikan')
                                     ->multiple()
                                     ->relationship('jenjang', 'nama_jenjang')
-                                    ->placeholder('Pilih jenjang')
                                     ->searchable()
                                     ->preload()
                                     ->required(),
@@ -77,44 +73,42 @@ class FormasiPklResource extends Resource
                                     ->label('Jurusan')
                                     ->multiple()
                                     ->relationship('jurusan', 'nama_jurusan')
-                                    ->placeholder('Pilih jurusan')
                                     ->searchable()
                                     ->preload()
                                     ->required(),
                             ])->columns(2),
                     ]),
-                    // Kanan: Detail Jadwal & Kuota
                     Forms\Components\Section::make('Detail Jadwal & Kuota')
                         ->schema([
                             Forms\Components\DatePicker::make('tanggal_mulai')
                                 ->label('Mulai PKL')
-                                ->displayFormat('d/m/Y')
+                                ->displayFormat('d M Y')
                                 ->native(false)
-                                ->placeholder(now()->startOfMonth())
+                                ->placeholder('Pilih tanggal mulai')
                                 ->defaultFocusedDate(now()->startOfMonth())
                                 ->closeOnDateSelection()
                                 ->required(),
                             Forms\Components\DatePicker::make('tanggal_selesai')
                                 ->label('Selesai PKL')
-                                ->displayFormat('d/m/Y')
+                                ->displayFormat('d M Y')
                                 ->native(false)
-                                ->placeholder(now()->startOfMonth())
+                                ->placeholder('Pilih tanggal selesai')
                                 ->defaultFocusedDate(now()->startOfMonth())
                                 ->closeOnDateSelection()
                                 ->required(),
                             Forms\Components\DatePicker::make('deadline_pendaftaran')
-                                ->label('Deadline Pendaftaran')
-                                ->displayFormat('d/m/Y')
+                                ->label('Batas Pendaftaran')
+                                ->displayFormat('d M Y')
                                 ->native(false)
-                                ->placeholder(now()->startOfMonth())
+                                ->placeholder('Pilih batas pendaftaran')
                                 ->defaultFocusedDate(now()->startOfMonth())
                                 ->closeOnDateSelection()
                                 ->required(),
                             Forms\Components\DatePicker::make('tanggal_pengumuman')
                                 ->label('Tanggal Pengumuman')
-                                ->displayFormat('d/m/Y')
+                                ->displayFormat('d M Y')
                                 ->native(false)
-                                ->placeholder(now()->startOfMonth())
+                                ->placeholder('Pilih tanggal pengumuman')
                                 ->defaultFocusedDate(now()->startOfMonth())
                                 ->closeOnDateSelection()
                                 ->required(),
@@ -142,7 +136,8 @@ class FormasiPklResource extends Resource
 
                 Tables\Columns\TextColumn::make('posisi.nama_posisi')
                     ->label('Posisi & Penempatan')
-                    ->description(fn ($record): ?string => $record->lokasi?->nama_lokasi),
+                    ->description(fn ($record): ?string => $record->lokasi?->nama_lokasi)
+                    ->searchable(),
                 
                 Tables\Columns\TextColumn::make('periode')
                     ->label('Periode')
@@ -274,8 +269,6 @@ class FormasiPklResource extends Resource
         return [
             'index' => Pages\ListFormasiPkls::route('/'),
             'create' => Pages\CreateFormasiPkl::route('/create'),
-            'view' => Pages\ViewFormasiPkl::route('/{record}'),
-            'edit' => Pages\EditFormasiPkl::route('/{record}/edit'),
         ];
     }
 }

@@ -19,8 +19,6 @@ class FormasiJenjangResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Admin';
-
     protected static ?string $label = 'Jenjang Pendidikan';
 
     protected static ?string $slug = 'formasi/jenjang-pendidikan';
@@ -38,6 +36,7 @@ class FormasiJenjangResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nama_jenjang')
+                    ->label('Nama Jenjang')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -48,6 +47,7 @@ class FormasiJenjangResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama_jenjang')
+                    ->label('Nama Jenjang')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -83,8 +83,6 @@ class FormasiJenjangResource extends Resource
     {
         return [
             'index' => Pages\ListFormasiJenjangs::route('/'),
-            // 'create' => Pages\CreateFormasiJenjang::route('/create'),
-            // 'edit' => Pages\EditFormasiJenjang::route('/{record}/edit'),
         ];
     }
 }

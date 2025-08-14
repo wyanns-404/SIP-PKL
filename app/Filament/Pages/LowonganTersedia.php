@@ -49,8 +49,6 @@ class LowonganTersedia extends Page implements HasTable, HasForms
 
     protected static ?string $navigationLabel = 'Lowongan';
 
-    protected static ?string $navigationGroup = 'Mahasiswa/Siswa';
-
     // protected function getHeaderActions(): array
     // {
     //     return [
@@ -76,10 +74,12 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                     ->label('Formasi')
                     ->description(fn ($record): ?string => \Illuminate\Support\Str::limit($record->deskripsi, 30))
                     ->tooltip(fn ($record): ?string => $record->deskripsi)
-                    ->limit(30),
+                    ->limit(30)
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('posisi.nama_posisi')
                     ->label('Posisi & Penempatan')
-                    ->description(fn ($record): ?string => $record->lokasi?->nama_lokasi),
+                    ->description(fn ($record): ?string => $record->lokasi?->nama_lokasi)
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('periode')
                     ->label('Periode')
                     ->getStateUsing(function ($record) {
@@ -127,7 +127,8 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                         }
 
                         return $today->lte($deadline) ? 'success' : 'gray';
-                    }),
+                    })
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('tanggal_pengumuman')
                     ->label('Tanggal Pengumuman')
                     ->date('d M Y')
