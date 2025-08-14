@@ -25,20 +25,20 @@ class ListFormasiPkls extends ListRecords
         $now = Carbon::now();
 
         return [
-            'All' => Tab::make(),
+            'Semua' => Tab::make(),
 
-            'Active' => Tab::make()
+            'Dibuka' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) =>
                     $query->whereDate('deadline_pendaftaran', '>', $now)
                 ),
 
-            'On Progress' => Tab::make()
+            'Berlangsung' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) =>
                     $query->whereDate('tanggal_mulai', '<=', $now)
                         ->whereDate('tanggal_selesai', '>=', $now)
                 ),
 
-            'Archive' => Tab::make()
+            'Selesai' => Tab::make()
                 ->modifyQueryUsing(fn (Builder $query) =>
                     $query->whereDate('tanggal_selesai', '<', $now)
                 ),

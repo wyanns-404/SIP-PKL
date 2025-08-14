@@ -19,8 +19,6 @@ class FormasiJurusanResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Admin';
-
     protected static ?string $label = 'Kualifikasi Jurusan';
 
     protected static ?string $slug = 'formasi/kualifikasi-jurusan';
@@ -38,6 +36,7 @@ class FormasiJurusanResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nama_jurusan')
+                    ->label('Nama Jurusan')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -48,6 +47,7 @@ class FormasiJurusanResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama_jurusan')
+                    ->label('Nama Jurusan')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -83,8 +83,6 @@ class FormasiJurusanResource extends Resource
     {
         return [
             'index' => Pages\ListFormasiJurusans::route('/'),
-            // 'create' => Pages\CreateFormasiJurusan::route('/create'),
-            // 'edit' => Pages\EditFormasiJurusan::route('/{record}/edit'),
         ];
     }
 }

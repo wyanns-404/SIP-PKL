@@ -11,16 +11,19 @@ use App\Models\Pelamar\PelamarPkl;
 use Filament\Tables\Actions\Action;
 use Filament\Support\Enums\MaxWidth;
 use Illuminate\Support\Facades\Auth;
+use Filament\Support\Enums\FontWeight;
 use Filament\Infolists\Components\Tabs;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Support\Facades\Storage;
+use Filament\Infolists\Components\Group;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Tabs\Tab;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Components\ImageEntry;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
+use Dom\Text;
 
 class StatusLamaran extends Page implements HasTable
 {
@@ -31,8 +34,6 @@ class StatusLamaran extends Page implements HasTable
     protected static ?string $title = '';
 
     protected static ?string $navigationLabel = 'Status Lamaran';
-
-    protected static ?string $navigationGroup = 'Mahasiswa/Siswa';
 
     use Tables\Concerns\InteractsWithTable, HasPageShield;
 
@@ -56,10 +57,10 @@ class StatusLamaran extends Page implements HasTable
                 Tables\Columns\BadgeColumn::make('status')
                     ->label('Status')
                     ->colors([
-                        'gray' => 'dikirim',
-                        'info' => 'diproses',
-                        'success' => 'diterima',
-                        'danger' => 'ditolak',
+                        'gray' => 'Menunggu Verifikasi',
+                        'info' => 'Sedang Diproses',
+                        'success' => 'Lamaran Diterima',
+                        'danger' => 'Lamaran Ditolak',
                     ])
                     ->alignCenter()
                     ->formatStateUsing(fn (string $state): string => ucfirst($state)),
@@ -92,136 +93,169 @@ class StatusLamaran extends Page implements HasTable
                             ->schema([
                                 Tabs::make('Detail Lamaran')
                                     ->tabs([
-                                        Tab::make('Detail Formasi')
-                                            ->schema([
-                                                TextEntry::make('formasi.nama_formasi')
-                                                    ->label('Nama Formasi')
-                                                    ->color('info'),
-                                                TextEntry::make('formasi.deskripsi')
-                                                    ->label('Deskripsi')
-                                                    ->color('info'),
-                                                TextEntry::make('formasi.posisi.nama_posisi')
-                                                    ->label('Posisi')
-                                                    ->color('info'),
-                                                TextEntry::make('formasi.lokasi.nama_lokasi')
-                                                    ->label('Lokasi Penempatan')
-                                                    ->color('info'),
-                                                TextEntry::make('formasi.kuota_penerimaan')
-                                                    ->label('Kuota')
-                                                    ->badge()
-                                                    ->color('gray'),
-                                            ]),
-                                        
-                                        Tab::make('Data Diri')
+                                        Tab::make('Umum')
+                                            ->icon('heroicon-o-information-circle')
                                             ->schema([
                                                 Section::make('')
                                                     ->schema([
+                                                        ImageEntry::make('pas_foto')
+                                                            ->label('')
+                                                            ->height(250)
+                                                            ->columnSpan(4),
+                                                        Group::make([
+                                                            TextEntry::make('status')
+                                                                ->label('')
+                                                                ->badge()
+                                                                ->colors([
+                                                                    'gray' => 'Menunggu Verifikasi',
+                                                                    'info' => 'Sedang Diproses',
+                                                                    'success' => 'Lamaran Diterima',
+                                                                    'danger' => 'Lamaran Ditolak',
+                                                                ]),
+                                                            TextEntry::make('user.name')
+                                                                ->label('')
+                                                                ->size(TextEntry\TextEntrySize::Large)
+                                                                ->weight(FontWeight::Bold),
+                                                            TextEntry::make('motivasi')
+                                                                ->label(''),
+                                                        ])->columnSpan(8),
+                                                    ])->columns(12),
+                                                
+                                                Section::make('')
+                                                    ->schema([ 
                                                         TextEntry::make('user.name')
                                                             ->label('Nama')
                                                             ->color('info')
                                                             ->columnSpan(6),
-
+                                                        
                                                         TextEntry::make('user.npm_nim_nis')
                                                             ->label('NPM/NIM/NIS')
                                                             ->color('info')
                                                             ->columnSpan(6),
-
+                                                        
                                                         TextEntry::make('user.email')
                                                             ->label('Email')
                                                             ->color('info')
                                                             ->columnSpan(6),
+                                                        
+                                                        TextEntry::make('nomor_handphone')
+                                                            ->label('Nomor Handphone')
+                                                            ->color('info')
+                                                            ->columnSpan(6),
+                                                        
+                                                        TextEntry::make('jenis_kelamin')
+                                                            ->label('Jenis Kelamin')
+                                                            ->color('info')
+                                                            ->columnSpan(6)
+                                                            ->visible(fn ($record) => $record->jenis_kelamin !== null)
+                                                            ->formatStateUsing(function ($state) {
+                                                                return match ($state) {
+                                                                    'L' => 'Laki-laki',
+                                                                    'P' => 'Perempuan',
+                                                                    default => $state,
+                                                                };
+                                                            }),
 
                                                         TextEntry::make('tanggal_lahir')
                                                             ->label('Tanggal Lahir')
                                                             ->date('d M Y')
                                                             ->color('info')
-                                                            ->columnSpan(6),
-
-                                                        TextEntry::make('jenis_kelamin')
-                                                            ->label('Jenis Kelamin')
-                                                            ->color('info')
-                                                            ->columnSpan(6),
-
-                                                        TextEntry::make('nomor_handphone')
-                                                            ->label('Nomor Handphone')
-                                                            ->color('info')
-                                                            ->columnSpan(6),
+                                                            ->columnSpan(6)
+                                                            ->visible(fn ($record) => $record->tanggal_lahir !== null),
 
                                                         TextEntry::make('alamat_lengkap')
-                                                            ->label('Alamat')
+                                                            ->label('Alamat Lengkap')
                                                             ->color('info')
-                                                            ->columnSpan(12),
-                                                    ])->columns(12),
-
-                                                Section::make('')
-                                                    ->schema([
+                                                            ->columnSpan(12)
+                                                            ->visible(fn ($record) => $record->alamat_lengkap !== null),
+                                                        
                                                         TextEntry::make('siswa.nama_sekolah')
                                                             ->label('Nama Sekolah')
                                                             ->color('info')
                                                             ->columnSpan(6)
                                                             ->visible(fn ($record) => $record->kategori_pelamar === 'siswa'),
-
+                                                        
                                                         TextEntry::make('mahasiswa.nama_universitas')
                                                             ->label('Nama Universitas')
                                                             ->color('info')
                                                             ->columnSpan(6)
                                                             ->visible(fn ($record) => $record->kategori_pelamar === 'mahasiswa'),
-
+                                                        
                                                         TextEntry::make('mahasiswa.fakultas')
                                                             ->label('Fakultas')
                                                             ->color('info')
                                                             ->columnSpan(6)
                                                             ->visible(fn ($record) => $record->kategori_pelamar === 'mahasiswa'),
-
+                                                        
                                                         TextEntry::make('mahasiswa.jurusan')
                                                             ->label('Jurusan')
                                                             ->color('info')
                                                             ->columnSpan(6)
                                                             ->visible(fn ($record) => $record->kategori_pelamar === 'mahasiswa'),
-
+                                                        
                                                         TextEntry::make('siswa.jurusan')
                                                             ->label('Jurusan')
                                                             ->color('info')
                                                             ->columnSpan(6)
                                                             ->visible(fn ($record) => $record->kategori_pelamar === 'siswa'),
-
+                                                        
                                                         TextEntry::make('mahasiswa.semester')
                                                             ->label('Semester')
                                                             ->color('info')
                                                             ->columnSpan(6)
                                                             ->visible(fn ($record) => $record->kategori_pelamar === 'mahasiswa'),
-                                                    ])->columns(12)
+                                                    ])->columns(12),
                                                 
-                                            ])->columns(12),
-                                            
-                                        Tab::make('File')
-                                            ->schema([
-                                                ImageEntry::make('pas_foto')
-                                                    ->label('Pas Foto')
-                                                    ->square() // atau ->circular()
-                                                    ->height(200)
-                                                    ->columnSpan(12)
-                                                    ->visible(fn($record) => $record->pas_foto !== null),
-                                                
-                                                ViewEntry::make('surat_permohonan')
-                                                    ->label('Surat Permohonan')
-                                                    ->view('filament.components.pdf-preview')
-                                                    ->columnSpan(6)
-                                                    ->visible(fn($record) => $record->surat_permohonan !== null),
-                                                
-                                                ViewEntry::make('cv')
-                                                    ->label('CV')
-                                                    ->view('filament.components.pdf-preview')
-                                                    ->columnSpan(6)
-                                                    ->visible(fn($record) => $record->cv !== null),
-                                                
-                                                ViewEntry::make('portofolio')
-                                                    ->label('Portofolio')
-                                                    ->view('filament.components.pdf-preview')
-                                                    ->columnSpan(6)
-                                                    ->visible(fn($record) => $record->portofolio !== null),
+                                                Section::make('')
+                                                    ->schema([
+                                                        TextEntry::make('formasi.nama_formasi')
+                                                            ->label('Nama Formasi')
+                                                            ->columnSpan(6)
+                                                            ->color('info'),
+                                                        TextEntry::make('formasi.deskripsi')
+                                                            ->label('Deskripsi')
+                                                            ->columnSpan(6)
+                                                            ->color('info'),
+                                                        TextEntry::make('formasi.posisi.nama_posisi')
+                                                            ->label('Posisi')
+                                                            ->columnSpan(6)
+                                                            ->color('info'),
+                                                        TextEntry::make('formasi.lokasi.nama_lokasi')
+                                                            ->label('Lokasi Penempatan')
+                                                            ->columnSpan(6)
+                                                            ->color('info'),
+                                                    ])->columns(12),
 
-                                            ])->columns(12)
+                                            ]),
+                                            
+                                        Tab::make('Berkas Lamaran')
+                                            ->icon('heroicon-o-document-text')
+                                            ->schema([
+                                                Section::make('Surat Permohonan')
+                                                    ->schema([                                                            
+                                                        ViewEntry::make('surat_permohonan')
+                                                            ->label('Surat Permohonan')
+                                                            ->view('filament.components.pdf-preview')
+                                                            ->visible(fn($record) => $record->surat_permohonan !== null),
+                                                    ])->columnSpan(6),
+                                                    
+                                                Section::make('CV')
+                                                    ->schema([
+                                                        ViewEntry::make('cv')
+                                                            ->label('CV')
+                                                            ->view('filament.components.pdf-preview')
+                                                            ->visible(fn($record) => $record->cv !== null),
+                                                    ])->columnSpan(6),
+                                                        
+                                                Section::make('Portofolio')
+                                                    ->schema([
+                                                        ViewEntry::make('portofolio')
+                                                            ->label('Portofolio')
+                                                            ->view('filament.components.pdf-preview')
+                                                            ->visible(fn($record) => $record->portofolio !== null),
+                                                    ])->columnSpan(6)->visible(fn($record) => $record->portofolio !== null),
+                                                            
+                                            ])->columns(12),
                                     ])
                             ]);
                     }),
@@ -232,7 +266,7 @@ class StatusLamaran extends Page implements HasTable
                     ->icon('heroicon-o-document-text')
                     ->color('success')
                     ->button()
-                    ->visible(fn ($record) => $record->status === 'diterima' && $record->surat_balasan)
+                    ->visible(fn ($record) => $record->status === 'Lamaran Diterima' && $record->surat_balasan)
                     ->modalHeading('Surat Balasan')
                     ->modalSubmitAction(false)
                     ->modalWidth(MaxWidth::Large)
@@ -252,7 +286,7 @@ class StatusLamaran extends Page implements HasTable
                     ->icon('heroicon-o-document-text')
                     ->color('success')
                     ->button()
-                    ->visible(fn ($record) => $record->status === 'diterima' && optional($record->nilaiDanSertifikat)->nilai && optional($record->nilaiDanSertifikat)->sertifikat)
+                    ->visible(fn ($record) => $record->status === 'Lamaran Diterima' && optional($record->nilaiDanSertifikat)->nilai && optional($record->nilaiDanSertifikat)->sertifikat)
                     ->modalHeading('Nilai & Sertifikat')
                     ->modalSubmitAction(false)
                     ->modalWidth(MaxWidth::Large)

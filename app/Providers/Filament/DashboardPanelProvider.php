@@ -72,7 +72,6 @@ class DashboardPanelProvider extends PanelProvider
                     ->slug('profile')
                     ->setTitle('Profile')
                     ->setNavigationLabel('Profile')
-                    ->setNavigationGroup('Mahasiswa/Siswa')
                     ->setIcon('heroicon-o-user-circle')
                     ->setSort(10)
                     // ->canAccess(fn () => Auth::user()->id === 1)
