@@ -292,7 +292,7 @@ class LamaranMasuk extends Page implements HasTable
                                     return 'pelamar/'. $npm . '/surat-balasan';
                                 })
                                 ->acceptedFileTypes(['application/pdf'])
-                                ->maxSize(2048)
+                                ->maxSize(1024)
                                 ->required(fn ($get) => $get('status') === 'Lamaran Diterima')
                                 ->getUploadedFileNameForStorageUsing(function ($file) {
                                     $date = now()->format('Ymd');
@@ -323,7 +323,7 @@ class LamaranMasuk extends Page implements HasTable
                                 ->default(fn($record) => optional($record->nilaiDanSertifikat)->nilai)
                                 ->label('File Nilai (PDF)')
                                 ->acceptedFileTypes(['application/pdf'])
-                                ->maxSize(2048)
+                                ->maxSize(1024)
                                 ->directory(fn($get, $record) => 'pelamar/' . ($record->user->npm_nim_nis ?? 'unknown') . '/nilai_dan_sertifikat')
                                 ->getUploadedFileNameForStorageUsing(function ($file, $get, $record) {
                                     $date = now()->format('Ymd');
@@ -335,7 +335,7 @@ class LamaranMasuk extends Page implements HasTable
                                 ->default(fn($record) => optional($record->nilaiDanSertifikat)->sertifikat)
                                 ->label('File Sertifikat (PDF)')
                                 ->acceptedFileTypes(['application/pdf'])
-                                ->maxSize(2048)
+                                ->maxSize(1024)
                                 ->directory(fn($get, $record) => 'pelamar/' . ($record->user->npm_nim_nis ?? 'unknown') . '/nilai_dan_sertifikat')
                                 ->getUploadedFileNameForStorageUsing(function ($file, $get, $record) {
                                     $date = now()->format('Ymd');

@@ -79,33 +79,33 @@
     </section>
 
     <!-- Data PKL Stats -->
-    {{-- <section class="py-16 bg-white">
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="bg-primary text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-3xl font-bold">127</span>
+                        <span class="text-3xl font-bold counter" data-target="{{ $totalPeserta }}">0</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Total Peserta PKL</h3>
                     <p class="text-gray-600">Mahasiswa yang telah mengikuti program</p>
                 </div>
                 <div class="text-center">
                     <div class="bg-secondary text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-3xl font-bold">24</span>
+                        <span class="text-3xl font-bold counter" data-target="{{ $sedangPkl }}">0</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Sedang PKL</h3>
                     <p class="text-gray-600">Mahasiswa yang sedang menjalankan PKL</p>
                 </div>
                 <div class="text-center">
                     <div class="bg-yellow-500 text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-3xl font-bold">12</span>
+                        <span class="text-3xl font-bold counter" data-target="{{ $lowonganTersedia }}">0</span>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-800 mb-2">Lowongan Tersedia</h3>
                     <p class="text-gray-600">Posisi PKL yang masih tersedia</p>
                 </div>
             </div>
         </div>
-    </section> --}}
+    </section>
 
     <!-- Formasi Section -->
     <section id="formasi" class="py-16 bg-gray-50">
@@ -129,60 +129,87 @@
     </section>
 
     <!-- Profil Section -->
-    <section id="profil" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-primary mb-4">Profil BBPOM</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h3 class="text-2xl font-bold text-primary mb-4">Tentang Kami</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Balai Besar Pengawas Obat dan Makanan (BBPOM) di Bandar Lampung merupakan Unit Pelaksana Teknis dari Badan Pengawas Obat dan Makanan yang bertugas melaksanakan kebijakan di bidang pengawasan obat dan makanan.
+<section id="profil" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-primary mb-4">Profil BBPOM</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div>
+                <h3 class="text-2xl font-bold text-primary mb-4">Tentang Kami</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    BBPOM di Bandar Lampung merupakan Unit Pelaksana Teknis di bawah Badan Pengawas Obat dan Makanan Republik Indonesia
+                    yang sesuai Peraturan Presiden No. 80 Tahun 2017 tentang Badan Pengawas Obat dan Makanan dan Peraturan Badan POM No. 22 Tahun 2020
+                    tentang Organisasi dan Tata Kerja Unit Pelaksana Teknis di Lingkungan Badan Pengawas Obat dan Makanan.
+                </p>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Sistem pengawasan Obat dan Makanan yang diselenggarakan oleh BPOM merupakan suatu proses yang komprehensif, mencakup pengawasan
+                    pre-market dan post-market.
+                </p>
+
+                <div class="mb-8">
+                    <h4 class="text-xl font-semibold text-secondary mb-3">Wilayah Kerja</h4>
+                    <p class="text-gray-600 mb-2">Wilayah kerja BBPOM di Bandar Lampung meliputi 10 kabupaten/kota di Provinsi Lampung:</p>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>Kota Bandar Lampung</li>
+                        <li>Kota Metro</li>
+                        <li>Kabupaten Pesawaran</li>
+                        <li>Kabupaten Pringsewu</li>
+                        <li>Kabupaten Tanggamus</li>
+                        <li>Kabupaten Pesisir Barat</li>
+                        <li>Kabupaten Lampung Selatan</li>
+                        <li>Kabupaten Lampung Timur</li>
+                        <li>Kabupaten Lampung Barat</li>
+                        <li>Kabupaten Lampung Tengah</li>
+                    </ul>
+                    <p class="text-gray-600 mb-2">Wilayah kerja Loka POM di Tulang Bawang meliputi 5 kabupaten:</p>
+                    <ul class="list-disc list-inside text-gray-600">
+                        <li>Kabupaten Tulang Bawang</li>
+                        <li>Kabupaten Tulang Bawang Barat</li>
+                        <li>Kabupaten Mesuji</li>
+                        <li>Kabupaten Lampung Utara</li>
+                        <li>Kabupaten Way Kanan</li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h4 class="text-xl font-semibold text-secondary mb-3">Visi</h4>
+                    <p class="text-gray-600 mb-4">
+                        Obat dan Makanan aman, bermutu, dan berdaya saing untuk mewujudkan Indonesia maju yang berdaulat,
+                        mandiri, dan berkepribadian berlandaskan gotong royong.
                     </p>
-                    
-                    <div class="mb-8">
-                        <h4 class="text-xl font-semibold text-secondary mb-3">Visi</h4>
-                        <p class="text-gray-600 mb-4">
-                            Obat dan Makanan aman, bermutu, dan bermanfaat bagi kesehatan masyarakat.
-                        </p>
-                    </div>
-                    
-                    <div>
-                        <h4 class="text-xl font-semibold text-secondary mb-3">Misi</h4>
-                        <ul class="text-gray-600 space-y-2">
-                            <li>• Meningkatkan perlindungan masyarakat dari risiko obat dan makanan yang tidak memenuhi syarat</li>
-                            <li>• Meningkatkan daya saing obat dan makanan Indonesia</li>
-                            <li>• Meningkatkan kapabilitas dan kredibilitas pengawasan obat dan makanan</li>
-                        </ul>
-                    </div>
                 </div>
                 
-                <div class="bg-gray-100 p-8 rounded-2xl">
-                    <h4 class="text-xl font-semibold text-primary mb-4">Tugas & Fungsi</h4>
-                    <div class="space-y-4">
-                        <div class="flex items-start space-x-3">
-                            <div class="w-2 h-2 bg-secondary rounded-full mt-2"></div>
-                            <p class="text-gray-600">Pengawasan produk obat dan makanan</p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-2 h-2 bg-secondary rounded-full mt-2"></div>
-                            <p class="text-gray-600">Sertifikasi dan registrasi produk</p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-2 h-2 bg-secondary rounded-full mt-2"></div>
-                            <p class="text-gray-600">Pembinaan dan penyuluhan kepada masyarakat</p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <div class="w-2 h-2 bg-secondary rounded-full mt-2"></div>
-                            <p class="text-gray-600">Penegakan hukum di bidang obat dan makanan</p>
-                        </div>
-                    </div>
+                <div>
+                    <h4 class="text-xl font-semibold text-secondary mb-3">Misi</h4>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>Membangun SDM unggul terkait Obat dan Makanan dengan mengembangkan kemitraan bersama seluruh komponen bangsa.</li>
+                        <li>Memfasilitasi percepatan pengembangan dunia usaha Obat dan Makanan dengan keberpihakan terhadap UMKM.</li>
+                        <li>Meningkatkan efektivitas pengawasan dan penindakan kejahatan Obat dan Makanan melalui sinergi pemerintah pusat dan daerah.</li>
+                        <li>Pengelolaan pemerintahan yang bersih, efektif, dan terpercaya di bidang Obat dan Makanan.</li>
+                    </ul>
                 </div>
             </div>
+            
+            <div class="bg-gray-100 p-8 rounded-2xl">
+                <h4 class="text-xl font-semibold text-primary mb-4">Tugas & Fungsi</h4>
+                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                    <li>Penyusunan rencana, program, dan anggaran di bidang pengawasan Obat dan Makanan.</li>
+                    <li>Pelaksanaan pemeriksaan fasilitas produksi dan distribusi Obat dan Makanan serta fasilitas pelayanan kefarmasian.</li>
+                    <li>Pelaksanaan sertifikasi produk dan fasilitas produksi/distribusi Obat dan Makanan.</li>
+                    <li>Pelaksanaan sampling, pengujian rutin, dan pengujian investigasi Obat dan Makanan.</li>
+                    <li>Pelaksanaan pemantauan label, iklan, dan peredaran Obat dan Makanan melalui siber.</li>
+                    <li>Pelaksanaan cegah tangkal, intelijen, dan penyidikan pelanggaran ketentuan peraturan perundangan.</li>
+                    <li>Pengelolaan komunikasi, informasi, edukasi, dan pengaduan masyarakat.</li>
+                    <li>Pelaksanaan kerja sama, pemantauan, evaluasi, dan pelaporan di bidang pengawasan Obat dan Makanan.</li>
+                    <li>Pelaksanaan urusan tata usaha dan rumah tangga.</li>
+                </ul>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- Manfaat Section -->
     <section id="manfaat" class="py-16 bg-gray-50">
@@ -653,13 +680,16 @@
             <div class="border-t border-white border-opacity-20 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                         <p class="text-sm">
-        © 2025 <span class="font-semibold">BBPOM Bandar Lampung</span> 
-        | Developed by 
-        <a href="https://github.com/wyanns-404" 
-           class="text-primary font-bold hover:underline hover:text-purple-400 decoration-transparent transition">
-           @wyanns
-        </a>
-    </p>
+                            © 2025 <span class="font-semibold">BBPOM Bandar Lampung</span> 
+
+                        </p>
+                        <p class="text-sm">
+                            Developed by 
+                            <a href="https://github.com/wyanns-404" 
+                            class="text-white font-bold hover:underline hover:text-purple-400 decoration-transparent transition">
+                            @wyanns
+                            </a>
+                        </p>
 
                     <p class="text-sm opacity-80 mb-0 mt-4 md:mb-0">
                         
