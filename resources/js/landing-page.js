@@ -36,66 +36,6 @@ const formasiData = [
         jurusan: "Farmasi, Teknologi Pangan, Teknik Industri",
         kuota: 2,
     },
-    {
-        nama: "Admin Sistem Informasi",
-        deskripsi:
-            "Membantu pengelolaan sistem informasi dan database untuk mendukung operasional BBPOM.",
-        posisi: "IT Support",
-        lokasi: "Kantor BBPOM Bandar Lampung",
-        periode: "2 Bulan (April - Mei 2025)",
-        batas: "15 Maret 2025",
-        jenjang: "D3/S1",
-        jurusan: "Teknik Informatika, Sistem Informasi",
-        kuota: 1,
-    },
-    {
-        nama: "Analis Keamanan Pangan",
-        deskripsi:
-            "Melakukan evaluasi keamanan pangan dan risk assessment terhadap produk makanan beredar.",
-        posisi: "Food Safety Analyst",
-        lokasi: "Laboratorium & Lapangan",
-        periode: "3 Bulan (Mei - Juli 2025)",
-        batas: "10 April 2025",
-        jenjang: "S1",
-        jurusan: "Teknologi Pangan, Gizi, Kesehatan Masyarakat",
-        kuota: 2,
-    },
-    {
-        nama: "Surveyor Pasar",
-        deskripsi:
-            "Melakukan survey dan sampling produk di pasar tradisional dan modern untuk pengawasan post market.",
-        posisi: "Market Surveyor",
-        lokasi: "Pasar & Retail Lampung",
-        periode: "2 Bulan (Juni - Juli 2025)",
-        batas: "25 Mei 2025",
-        jenjang: "D3/S1",
-        jurusan: "Farmasi, Kesehatan Masyarakat",
-        kuota: 3,
-    },
-    {
-        nama: "Research Assistant",
-        deskripsi:
-            "Membantu kegiatan penelitian dan pengembangan metode analisis di laboratorium BBPOM.",
-        posisi: "Research Support",
-        lokasi: "Laboratorium Penelitian",
-        periode: "4 Bulan (Juli - Oktober 2025)",
-        batas: "15 Juni 2025",
-        jenjang: "S1",
-        jurusan: "Kimia, Biologi, Farmasi",
-        kuota: 1,
-    },
-    {
-        nama: "Public Relations Assistant",
-        deskripsi:
-            "Membantu kegiatan komunikasi publik dan edukasi masyarakat tentang keamanan obat dan makanan.",
-        posisi: "PR Support",
-        lokasi: "Divisi Humas BBPOM",
-        periode: "2 Bulan (Agustus - September 2025)",
-        batas: "20 Juli 2025",
-        jenjang: "S1",
-        jurusan: "Komunikasi, Jurnalistik, Public Relations",
-        kuota: 1,
-    },
 ];
 
 let currentPage = 1;
@@ -315,4 +255,34 @@ document.addEventListener("DOMContentLoaded", function () {
             mobileMenu.classList.add("hidden");
         });
     });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.counter');
+
+    const animateCounter = (counter) => {
+        const target = +counter.getAttribute('data-target');
+        const duration = 1000; // durasi animasi dalam ms
+        const stepTime = Math.max(Math.floor(duration / target), 20);
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += 1;
+            counter.textContent = current;
+            if (current >= target) {
+                clearInterval(timer);
+            }
+        }, stepTime);
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => observer.observe(counter));
 });
