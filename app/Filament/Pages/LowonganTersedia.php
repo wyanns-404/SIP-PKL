@@ -369,7 +369,7 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                                     ->label('Pas Foto')
                                     ->directory(fn ($get) => 'pelamar/' . $get('npm_nim_nis') . '/foto')
                                     ->image()
-                                    ->maxSize(2048) // 2MB
+                                    ->maxSize(1024) // 2MB
                                     ->imagePreviewHeight('150')
                                     ->preserveFilenames(false)
                                     ->getUploadedFileNameForStorageUsing(fn ($file) => 
@@ -382,7 +382,7 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                                 FileUpload::make('surat_permohonan')
                                     ->label('Surat Permohonan')
                                     ->directory(fn ($get) => 'pelamar/' . $get('npm_nim_nis') . '/surat_permohonan')
-                                    ->maxSize(3072) // 3MB
+                                    ->maxSize(1024) // 3MB
                                     ->preserveFilenames(false)
                                     ->getUploadedFileNameForStorageUsing(fn ($file) => 
                                         'surat_permohonan_' . now()->timestamp . '.' . $file->getClientOriginalExtension()
@@ -394,7 +394,7 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                                 FileUpload::make('cv')
                                     ->label('Curriculum Vitae (CV)')
                                     ->directory(fn ($get) => 'pelamar/' . $get('npm_nim_nis') . '/cv')
-                                    ->maxSize(3072) // 3MB
+                                    ->maxSize(1024) // 3MB
                                     ->preserveFilenames(false)
                                     ->getUploadedFileNameForStorageUsing(fn ($file) => 
                                         'cv_' . now()->timestamp . '.' . $file->getClientOriginalExtension()
@@ -406,7 +406,7 @@ class LowonganTersedia extends Page implements HasTable, HasForms
                                 FileUpload::make('portofolio')
                                     ->label('Portofolio')
                                     ->directory(fn ($get) => 'pelamar/' . $get('npm_nim_nis') . '/portofolio')
-                                    ->maxSize(5120) // 5MB
+                                    ->maxSize(1024) // 5MB
                                     ->preserveFilenames(false)
                                     ->getUploadedFileNameForStorageUsing(fn ($file) => 
                                         'portofolio_' . now()->timestamp . '.' . $file->getClientOriginalExtension()
