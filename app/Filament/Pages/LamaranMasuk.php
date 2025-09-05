@@ -27,6 +27,8 @@ class LamaranMasuk extends Page implements HasTable
 {
     use Tables\Concerns\InteractsWithTable, HasPageShield;
 
+    protected static ?string $navigationGroup = 'Tampilan Admin';
+
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
 
     protected static string $view = 'filament.pages.lamaran-masuk';

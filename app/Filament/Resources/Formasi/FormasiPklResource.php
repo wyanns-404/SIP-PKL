@@ -20,6 +20,8 @@ class FormasiPklResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
+    protected static ?string $navigationGroup = 'Tampilan Admin';
+
     protected static ?string $label = 'Formasi PKL';
 
     protected static ?string $slug = 'formasi-pkl';

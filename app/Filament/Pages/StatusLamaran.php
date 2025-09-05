@@ -29,6 +29,8 @@ class StatusLamaran extends Page implements HasTable
 {
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
 
+    protected static ?string $navigationGroup = 'Tampilan User';
+
     protected static string $view = 'filament.pages.status-lamaran';
 
     protected static ?string $title = '';

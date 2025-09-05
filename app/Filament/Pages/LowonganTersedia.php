@@ -43,6 +43,8 @@ class LowonganTersedia extends Page implements HasTable, HasForms
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
+    protected static ?string $navigationGroup = 'Tampilan User';
+
     protected static string $view = 'filament.pages.lowongan-tersedia';
 
     protected static ?string $title = '';

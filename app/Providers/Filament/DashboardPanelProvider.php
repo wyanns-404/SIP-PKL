@@ -80,17 +80,10 @@ class DashboardPanelProvider extends PanelProvider
                     ->setNavigationLabel('Profile')
                     ->setIcon('heroicon-o-user-circle')
                     ->setSort(10)
-                    // ->canAccess(fn () => Auth::user()->id === 1)
                     ->shouldRegisterNavigation(true)
-                    ->shouldShowEmailForm(true)
-                    ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowDeleteAccountForm(true)
                     ->shouldShowSanctumTokens(false)
                     ->shouldShowBrowserSessionsForm(true)
-                    ->shouldShowAvatarForm(
-                        value: true,
-                        directory: 'profile-photos', // image will be stored in 'storage/app/public/avatars
-                        rules: 'mimes:jpeg,png|max:1024'
-                    )
                     ->shouldShowEditProfileForm(false)
                     ->customProfileComponents([
                         \App\Livewire\CustomEditProfileInformationComponent::class,

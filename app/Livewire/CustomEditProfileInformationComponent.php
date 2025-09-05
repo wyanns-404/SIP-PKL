@@ -40,31 +40,17 @@ class CustomEditProfileInformationComponent extends EditProfileForm
                     ->aside()
                     ->description(__('filament-edit-profile::default.profile_information_description'))
                     ->schema([
-                        FileUpload::make(config('filament-edit-profile.avatar_column', 'avatar_url'))
-                            ->label(__('filament-edit-profile::default.avatar'))
-                            ->avatar()
-                            ->imageEditor()
-                            ->disk(config('filament-edit-profile.disk', 'public'))
-                            ->visibility(config('filament-edit-profile.visibility', 'public'))
-                            ->directory(filament('filament-edit-profile')->getAvatarDirectory() . '/' . Auth::user()->npm_nim_nis)
-                            ->getUploadedFileNameForStorageUsing(function ($file) {
-                                $extension = $file->getClientOriginalExtension();
-                                return now()->format('Y-m-d-H-i-s') . '.' . $extension;
-                            })
-                            ->rules(filament('filament-edit-profile')->getAvatarRules())
-                            ->hidden(! filament('filament-edit-profile')->getShouldShowAvatarForm()),
                         TextInput::make('name')
                             ->label(__('filament-edit-profile::default.name'))
-                            ->required(),
+                            ->disabled(),
+                        TextInput::make('npm_nim_nis')
+                            ->label('NPM/NIM/NIS')
+                            ->disabled(),
                         TextInput::make('email')
                             ->label(__('filament-edit-profile::default.email'))
                             ->email()
                             ->required()
                             ->hidden(! filament('filament-edit-profile')->getShouldShowEmailForm())
-                            ->unique($this->userClass, ignorable: $this->user),
-                        TextInput::make('npm_nim_nis')
-                            ->label('NPM/NIM/NIS')
-                            ->required()
                             ->unique($this->userClass, ignorable: $this->user),
                     ]),
             ])
